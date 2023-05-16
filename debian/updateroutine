@@ -14,7 +14,7 @@ date="$(command -v date)"
 tail="$(command -v tail)"
 
 logFile="/var/log/updateroutine.log"
-echo "Updating: $($date +'%a %e %b %4Y %H:%m')" >> $logFile
+echo "Updating: $($date +'%a %e %b %4Y %H:%M')" >> $logFile
 # Trim log file to 25 lines
 # https://unix.stackexchange.com/a/310871
 echo "$($tail -n 25 $logFile)" > $logFile
