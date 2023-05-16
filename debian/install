@@ -1,5 +1,12 @@
 #!/bin/sh
 
+# --- README --- #
+# to run use 
+# curl -fsSL https://raw.githubusercontent.com/MidnightRocket/linux-update-scripts/main/debian/install | sudo sh
+#
+#
+# --- --- ---
+
 # POSIX compliant implementation
 # https://stackoverflow.com/a/52586842
 if [ "$(id -u)" -ne 0 ];then
