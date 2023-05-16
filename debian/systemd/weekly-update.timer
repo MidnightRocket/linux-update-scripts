@@ -1,0 +1,15 @@
+[Unit]
+Description=Weekly timer for updateroutine
+After=network-online.target
+Requires=network-online.target
+
+[Timer]
+# https://www.airplane.dev/blog/systemd-timer-how-to-schedule-tasks-with-systemd
+# systemd-analyze calendar --iterations=2 "Sun *-*-* 04:05:00"
+OnCalendar=Sun *-*-* 04:05:00
+
+# Run within a random window for 0-5 minutes
+RandomizedDelaySec=300
+
+[Install]
+WantedBy=network-online.target
