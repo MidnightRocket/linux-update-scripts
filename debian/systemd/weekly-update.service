@@ -4,7 +4,7 @@ After=network-online.target
 Requires=network-online.target
 # https://man7.org/linux/man-pages/man5/systemd.unit.5.html#top_of_page
 StartLimitBurst=1
-StartLimitIntervalSec=1000
+StartLimitIntervalSec=300
 
 [Service]
 ExecStart=/usr/local/sbin/updateroutine

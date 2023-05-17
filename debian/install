@@ -114,7 +114,7 @@ unitsDir="/etc/systemd/system"
 serviceUnit="weekly-update.service"
 baseName="$serviceUnit"
 file="$unitsDir/$baseName"
-downloadFile ${baseUrl}/systemd/$baseName 9ac112574e9ff54c3e1b0c67861f7ce262c8bebe86c21f6aa970c1416358c1c6 $file
+downloadFile ${baseUrl}/systemd/$baseName c9152f46513d12000ce1bfd6d31eccf80cd7c07c91c4d0b27eb3bb982430012d $file
 
 timerUnit="weekly-update.timer"
 baseName="$timerUnit"
