@@ -82,7 +82,7 @@ if [ ! -d "$configDir" ]; then
 
 	baseName="config.conf"
 	file="$configDir/$baseName"
-	downloadFile ${baseUrl}/configs/$baseName 304ef9a69f0cdc8795f466fe40d2ca3b14609616eb98b706d749426b9eb85e73 $file
+	downloadFile ${baseUrl}/configs/$baseName 5bf2351501a9cd8b514164dd9a220bbd1503c30e83b9c1394d4f28f963e76cae $file
 	# config.conf need to execute as it is a script
 	chmod 755 $file
 
