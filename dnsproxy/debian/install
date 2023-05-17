@@ -82,7 +82,7 @@ if [ ! -d "$configDir" ]; then
 
 	baseName="config.conf"
 	file="$configDir/$baseName"
-	downloadFile ${baseUrl}/configs/$baseName 5bf2351501a9cd8b514164dd9a220bbd1503c30e83b9c1394d4f28f963e76cae $file
+	downloadFile ${baseUrl}/configs/$baseName 194cf7db611189a1e85fe359e3b8eae9ea4de5a1c18554f1879f8ef863b34d32 $file
 	# config.conf need to execute as it is a script
 	chmod 755 $file
 
@@ -133,8 +133,11 @@ downloadFile ${baseUrl}/systemd/$baseName 9f4870d2752d4e28368444f96ac03765840945
 systemctl="$(command -v systemctl)"
 
 
-
-$systemctl enable --now $serviceUnit
+if [ "$1" = "--update" ]; then
+	$systemctl restart $serviceUnit
+else 
+	$systemctl enable --now $serviceUnit
+fi
 
 
 
