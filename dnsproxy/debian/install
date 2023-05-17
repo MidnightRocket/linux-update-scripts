@@ -59,11 +59,13 @@ baseUrl="https://raw.githubusercontent.com/MidnightRocket/linux-update-scripts/m
 
 
 
+binDir="/usr/local/bin"
+
 
 
 baseName="dnsproxy-wrapper"
-file="/usr/local/bin/$baseName"
-downloadFile ${baseUrl}/configs/$baseName 523ccc584b416aaab57bf63b203c7edd3064a5475ac82437f2f82d957753a37c $file
+file="$binDir/$baseName"
+downloadFile ${baseUrl}/$baseName eb46f0aa2f566a7fc03cede1d1de52b37bec59ff25929b21b80277d7d498bc49 $file
 # Must be executable
 chmod 755 $file
 
@@ -96,6 +98,21 @@ fi
 
 
 
+baseName="dnsproxy-downloader"
+file="$TMPDIR/$baseName"
+downloadFile ${baseUrl}/$baseName 2a48c69bcab5b41597a8ecd4069f4e385e219829ee67ca93e8196d7dab96d4d1 $file
+# Must be executable
+chmod 755 $file
+dnsproxyDownloader="$file"
+
+
+
+
+
+
+file="$($dnsproxyDownloader $TMPDIR)"
+mv "$file" "$binDir/dnsproxy"
+
 
 
 
@@ -109,12 +126,18 @@ unitsDir="/etc/systemd/system"
 serviceUnit="dnsproxy.service"
 baseName="$serviceUnit"
 file="$unitsDir/$baseName"
-downloadFile ${baseUrl}/systemd/$baseName c9152f46513d12000ce1bfd6d31eccf80cd7c07c91c4d0b27eb3bb982430012d $file
+downloadFile ${baseUrl}/systemd/$baseName 9f4870d2752d4e28368444f96ac037658409451d46d978527cc6687e98098b93 $file
 
 
 
 systemctl="$(command -v systemctl)"
+
+
+
 $systemctl enable --now $serviceUnit
+
+
+
 $systemctl status $serviceUnit
 
 echo 
