@@ -1,0 +1,40 @@
+#!/bin/sh
+
+if [ "$(id -u)" -ne 0 ];then
+	echo "Requires root!"
+	exit 1
+fi
+
+
+
+if [ "$1" = "--update" ]; then 
+	echo "Updating..."
+	TMPDIR="$($mktemp -d)"
+	trap 'rm -rf -- "$TMPDIR"' EXIT
+	
+	installerFile="$TMPDIR/installer"
+	curl -o $installerFile "https://raw.githubusercontent.com/MidnightRocket/linux-update-scripts/main/dnsproxy/debian/install"
+	chmod 755 $installerFile
+	$installerFile --update
+	exit 0
+fi
+
+
+
+
+
+
+
+configDir="/etc/dnsproxy-configs"
+
+configFile="$configDir/config.conf"
+if [ -x "$configFile" ]; then
+	source "$configFile"
+else
+	# Fallback to bare minimum configs
+	export arguments="-l 127.0.0.1 -p 53 -u tls://9.9.9.9 --cache "
+fi
+
+dnsproxy="/usr/local/bin/dnsproxy"
+# Replace process with dnsproxy
+exec $dnsproxy $arguments

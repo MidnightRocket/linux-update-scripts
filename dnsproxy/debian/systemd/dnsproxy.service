@@ -1,0 +1,13 @@
+# https://github.com/AdguardTeam/dnsproxy/issues/39#issuecomment-570742700
+[Unit]
+Description=DNSProxy service
+After=syslog.target
+After=network.target
+
+[Service]
+ExecStart=/usr/local/sbin/dnsproxy-wrapper
+
+CapabilityBoundingSet=CAP_NET_BIND_SERVICE
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+[Install]
+WantedBy=multi-user.target
