@@ -29,7 +29,8 @@ configDir="/etc/dnsproxy-configs"
 
 configFile="$configDir/config.conf"
 if [ -x "$configFile" ]; then
-	source "$configFile"
+	# https://stackoverflow.com/a/13702876
+	. "$configFile"
 else
 	# Fallback to bare minimum configs
 	export arguments="-l 127.0.0.1 -p 53 -u tls://9.9.9.9 --cache "
