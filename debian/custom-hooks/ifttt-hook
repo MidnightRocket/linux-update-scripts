@@ -14,9 +14,10 @@ val2="$(echo $2 | sed 's/^ *//;s/ *$//')"
 val3="$(echo $3 | sed 's/^ *//;s/ *$//')"
 
 body="{\"value1\":\"$val1\",\"value2\":\"$val2\",\"value3\":\"$val3\"}"
+echo "IFTTT payload"
 echo $body
 URL="https://maker.ifttt.com/trigger/$action/with/key/$IFTTTKEY"
 
 curl="$(command -v curl)"
 $curl -sX POST -H "Content-Type: application/json" -d "$body" $URL  > /dev/null
-echo "done"
+echo "IFTTT hook done"
