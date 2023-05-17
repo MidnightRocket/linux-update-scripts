@@ -34,26 +34,26 @@ downloadFile() {
 	shasum="$2"
 	saveTo="$3"
 
-	file="$($mktemp -p $TMPDIR)"
-	$curl -f $1 -o $file
+	tmpFile="$($mktemp -p $TMPDIR)"
+	$curl -f $1 -o $tmpFile
 	
 	if [ "$?" -ne 0 ]; then
 		echo "Could not download file from: $url"
 		exit 1
 	fi
 	
-	echo "$shasum $file" | $sha256sum --status -c
+	echo "$shasum $tmpFile" | $sha256sum --status -c
 
 	if [ "$?" -ne 0 ]; then
 		echo "Failed to validate file from: $url"
 		echo "File sha256sum mismatch!"
-		echo "Wanted: $($sha256sum $file)"
+		echo "Wanted: $($sha256sum $tmpFile)"
 		echo "But got: $shasum"
 		exit 2
 	fi
 	
 	echo "installing to: $saveTo"
-	cp $file $saveTo
+	cp $tmpFile $saveTo
 }
 
 baseUrl="https://raw.githubusercontent.com/MidnightRocket/linux-update-scripts/main/debian"
@@ -64,19 +64,61 @@ baseUrl="https://raw.githubusercontent.com/MidnightRocket/linux-update-scripts/m
 
 baseName="updateroutine"
 updateFile="/usr/local/sbin/$baseName"
-downloadFile ${baseUrl}/$baseName b6dc375e3eaf168723c4a9c8cb0b7004d0d55b4e68641feebc0308822234600d $updateFile
+downloadFile ${baseUrl}/$baseName 93250d948cfb5d1a35cbbbc19e30df2831cef6b3a22968a4fbaee98fc4f13647 $updateFile
 
-chmod +rx $updateFile
 
+chmod 755 "$updateFile"
+
+
+
+# --- Create hook directory
+
+configDir="/etc/updateroutine"
+hooksDir="${configDir}/hooks"
+
+if [ ! -d "$configDir" ]; then
+	echo "Creating config dir in: $configDir"
+	mkdir $configDir
+	chmod 755 "$configDir"
+fi
+
+if [ ! -d "$hooksDir" ]; then 
+	mkdir $hooksDir
+	chmod 755 "$hooksDir"
+
+	baseName="pre-apt-hook"
+	file="$hooksDir/$baseName"
+	downloadFile ${baseUrl}/hooks/$baseName da8ac8ff8e672a477a1dc18c97f340868ffa97b1bf43e0883c24ad111f5d586e $file
+	chmod 755 "$file"
+	echo "Created file $file"
+
+	baseName="post-apt-hook"
+	file="$hooksDir/$baseName"
+	downloadFile ${baseUrl}/hooks/$baseName 51f8d50d4000d59491d4628037da575fd69182f6a0e6f0c631848c7a5738cc2e $file
+	chmod 755 "$file"
+	echo "Created file $file"
+fi
+
+
+
+
+
+
+
+
+
+
+# --- Download systemd unit files
+unitsDir="/etc/systemd/system"
 
 serviceUnit="weekly-update.service"
 baseName="$serviceUnit"
-file="/etc/systemd/system/$baseName"
+file="$unitsDir/$baseName"
 downloadFile ${baseUrl}/systemd/$baseName 9ac112574e9ff54c3e1b0c67861f7ce262c8bebe86c21f6aa970c1416358c1c6 $file
 
 timerUnit="weekly-update.timer"
 baseName="$timerUnit"
-file="/etc/systemd/system/$baseName"
+file="$unitsDir/$baseName"
 downloadFile ${baseUrl}/systemd/$baseName 23feea81fe8d800dc14e4d02a903bbaf23c3ffc14d54e586b8d8f046cb8259d7 $file
 
 
