@@ -8,6 +8,7 @@ import subprocess
 import urllib.request
 import shutil
 import tarfile
+import platform
 from http import HTTPStatus
 
 
@@ -30,6 +31,15 @@ if not os.path.isdir(dirPath):
 archivePath = dirPath + "/archive.tar.gz"
 print(dirPath, file=sys.stderr)
 print("hello", file=sys.stderr)
+
+
+def getArchType() -> str:
+	aliases = {
+			"x86_64": "386",
+			"aarch64": "arm64"
+			}
+	return aliases[platform.machine()]
+
 
 def getLatestRelease() -> json:
 	url="https://api.github.com/repos/AdguardTeam/dnsproxy/releases/latest"
@@ -80,7 +90,7 @@ def extractArchive(archivePath, memberName, outputPath):
 
 release = getLatestRelease()
 
-latestAsset = getAssetWithNamePattern(r"^dnsproxy-linux-arm64-v[\d.]*\.tar\.gz$", release["assets"])
+latestAsset = getAssetWithNamePattern(r"^dnsproxy-linux-" + re.escape(getArchType()) + "-v[\d.]*\.tar\.gz$", release["assets"])
 downloadUrl = latestAsset["browser_download_url"]
 
 

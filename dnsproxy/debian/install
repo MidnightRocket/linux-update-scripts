@@ -100,7 +100,7 @@ fi
 
 baseName="dnsproxy-downloader"
 file="$TMPDIR/$baseName"
-downloadFile ${baseUrl}/$baseName 2a48c69bcab5b41597a8ecd4069f4e385e219829ee67ca93e8196d7dab96d4d1 $file
+downloadFile ${baseUrl}/$baseName c7c97464f70b6969ee1b9abf8a0ba9d0376a9ed405e572012bbca4d9469c3013 $file
 # Must be executable
 chmod 755 $file
 dnsproxyDownloader="$file"
@@ -134,7 +134,9 @@ systemctl="$(command -v systemctl)"
 
 
 if [ "$1" = "--update" ]; then
-	$systemctl restart $serviceUnit
+	$systemctl stop $serviceUnit
+	$systemctl daemon-reload
+	$systemctl start $serviceUnit
 else 
 	$systemctl enable --now $serviceUnit
 fi
