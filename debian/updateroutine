@@ -10,6 +10,9 @@ fi
 
 
 
+# --- Logging
+
+
 date="$(command -v date)"
 tail="$(command -v tail)"
 
@@ -20,10 +23,25 @@ echo "Updating: $($date +'%a %e %b %4Y %H:%M')" >> $logFile
 echo "$($tail -n 25 $logFile)" > $logFile
 
 
+runHook() {
+	baseDir="/etc/updateroutine/hooks"
+	script="${basedir}/$1"
+	if [ -x "$script" ]; then
+		$script
+	fi
+}
 
+
+# --- Pre apt routine
+
+runHook pre-apt-hook
+
+
+
+
+# --- Apt routine
 
 apt="$(command -v apt)"
-wall="$(command -v wall)"
 
 
 $apt update -y
@@ -31,8 +49,14 @@ $apt full-upgrade -y
 $apt autoclean -y
 $apt autoremove -y
 
+# --- Post apt routine
+
+runHook post-apt-hook
 
 
+# --- Reboot
+
+wall="$(command -v wall)"
 time="1"
 wall -n "System reboot in $time minute(s)"
 

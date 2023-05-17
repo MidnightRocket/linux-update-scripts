@@ -1,0 +1,7 @@
+#!/bin/sh
+# Script which gets called before apt update routine is run
+
+CURRENTDIR="$(dirname "$(realpath "$0")")"
+
+# Your script goes here: 
+
