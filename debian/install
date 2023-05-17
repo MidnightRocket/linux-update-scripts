@@ -18,7 +18,6 @@ fi
 
 
 mktemp="$(command -v mktemp)"
-crontab="$(command -v crontab)"
 cat="$(command -v cat)"
 curl="$(command -v curl)"
 sha256sum="$(command -v sha256sum)"
