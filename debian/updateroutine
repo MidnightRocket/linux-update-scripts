@@ -25,7 +25,7 @@ echo "$($tail -n 25 $logFile)" > $logFile
 
 runHook() {
 	baseDir="/etc/updateroutine/hooks"
-	script="${basedir}/$1"
+	script="${baseDir}/$1"
 	if [ -x "$script" ]; then
 		$script
 	fi
