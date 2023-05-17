@@ -1,0 +1,22 @@
+#!/bin/sh
+CURRENTDIR="$(dirname "$(realpath "$0")")"
+
+# Create a file ifttt-token.key
+# with permissions:
+# chmod 600 ifttt-token.key
+# Read/write only for owner
+IFTTTKEY="$(cat $CURRENTDIR/ifttt-token.key)"
+
+action="generic_curl_hook"
+
+val1="$(echo $1 | sed 's/^ *//;s/ *$//')"
+val2="$(echo $2 | sed 's/^ *//;s/ *$//')"
+val3="$(echo $3 | sed 's/^ *//;s/ *$//')"
+
+body="{\"value1\":\"$val1\",\"value2\":\"$val2\",\"value3\":\"$val3\"}"
+echo $body
+URL="https://maker.ifttt.com/trigger/$action/with/key/$IFTTTKEY"
+
+curl="$(command -v curl)"
+$curl -sX POST -H "Content-Type: application/json" -d "$body" $URL  > /dev/null
+echo "done"
