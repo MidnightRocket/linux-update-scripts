@@ -57,8 +57,14 @@ runHook post-apt-hook
 # --- Reboot
 
 wall="$(command -v wall)"
-time="1"
-wall -n "System reboot in $time minute(s)"
+time="60"
+wall -n "System reboot in $time second(s)"
 
-shutdown -r +$time
+sleep $time
+
+# On dietpi systems: 
+# https://github.com/MichaIng/DietPi/issues/4555#issuecomment-933622980
+# Need to use with now
+
+shutdown -r now
 
