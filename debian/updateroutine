@@ -58,7 +58,9 @@ runHook post-apt-hook
 
 wall="$(command -v wall)"
 time="60"
-wall -n "System reboot in $time second(s)"
+msg="System reboot in $time second(s)"
+wall -n "$msg"
+echo "$msg"
 
 sleep $time
 
