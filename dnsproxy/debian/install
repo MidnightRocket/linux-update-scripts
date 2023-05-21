@@ -65,7 +65,7 @@ binDir="/usr/local/bin"
 
 baseName="dnsproxy-wrapper"
 file="$binDir/$baseName"
-downloadFile ${baseUrl}/$baseName eb46f0aa2f566a7fc03cede1d1de52b37bec59ff25929b21b80277d7d498bc49 $file
+downloadFile ${baseUrl}/$baseName 21f9fe6c8adf3cda609d85049dc3f0cb12e9525bd6a2adf86e40120b32a1ee9f $file
 # Must be executable
 chmod 755 $file
 
@@ -82,7 +82,7 @@ if [ ! -d "$configDir" ]; then
 
 	baseName="config.conf"
 	file="$configDir/$baseName"
-	downloadFile ${baseUrl}/configs/$baseName f8632941ee3dedf4d9eedd51aa200d7e06bb9c0810225a3763c14965e490f4cc $file
+	downloadFile ${baseUrl}/configs/$baseName f1c2929c92a11739c9aca6755b304852dd3f2cf708a204851b78406f1d337b4f $file
 	# config.conf need to execute as it is a script
 	chmod 755 $file
 
