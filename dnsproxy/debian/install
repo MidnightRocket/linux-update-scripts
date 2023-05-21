@@ -126,7 +126,7 @@ unitsDir="/etc/systemd/system"
 serviceUnit="dnsproxy.service"
 baseName="$serviceUnit"
 file="$unitsDir/$baseName"
-downloadFile ${baseUrl}/systemd/$baseName 9f4870d2752d4e28368444f96ac037658409451d46d978527cc6687e98098b93 $file
+downloadFile ${baseUrl}/systemd/$baseName c5e2e204d99050358737716f03e9933be5f903f48b792e0e4c773740a8fb7205 $file
 
 
 
@@ -137,7 +137,15 @@ if [ "$1" = "--update" ]; then
 	$systemctl stop $serviceUnit
 	$systemctl daemon-reload
 	$systemctl start $serviceUnit
-else 
+else
+	# Creates system user with no homedir, no login shell
+	# And automatically creates matching group i.e. 'dnsproxy'
+	useradd -s /usr/sbin/nologin --system -M dnsproxy
+
+	# Make dnsproxy user owner of $configDir
+	chown dnsproxy:dnsproxy -R $configDir
+
+
 	$systemctl enable --now $serviceUnit
 fi
 
