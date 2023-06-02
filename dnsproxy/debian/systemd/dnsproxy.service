@@ -1,7 +1,6 @@
 # https://github.com/AdguardTeam/dnsproxy/issues/39#issuecomment-570742700
 [Unit]
 Description=DNSProxy service
-After=syslog.target
 After=network-online.target
 
 [Service]

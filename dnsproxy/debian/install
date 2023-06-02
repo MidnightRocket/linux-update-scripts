@@ -126,7 +126,7 @@ unitsDir="/etc/systemd/system"
 serviceUnit="dnsproxy.service"
 baseName="$serviceUnit"
 file="$unitsDir/$baseName"
-downloadFile ${baseUrl}/systemd/$baseName c5e2e204d99050358737716f03e9933be5f903f48b792e0e4c773740a8fb7205 $file
+downloadFile ${baseUrl}/systemd/$baseName f8582e4f7731747faa57da2bfec3e95df6c9b61183e8f9ff0e7797f3586c57e4 $file
 
 
 
