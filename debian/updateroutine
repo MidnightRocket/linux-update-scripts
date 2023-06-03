@@ -44,10 +44,10 @@ runHook pre-apt-hook
 apt="$(command -v apt)"
 
 
-$apt update -y
-$apt full-upgrade -y
-$apt autoclean -y
-$apt autoremove -y
+$apt update -q -y
+$apt full-upgrade -q  -y
+$apt autoclean -q -y
+$apt autoremove -q -y
 
 # --- Post apt routine
 
