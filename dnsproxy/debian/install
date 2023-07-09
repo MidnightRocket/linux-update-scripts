@@ -98,20 +98,69 @@ fi
 
 
 
-baseName="dnsproxy-downloader"
-file="$TMPDIR/$baseName"
-downloadFile ${baseUrl}/$baseName c7c97464f70b6969ee1b9abf8a0ba9d0376a9ed405e572012bbca4d9469c3013 $file
-# Must be executable
-chmod 755 $file
-dnsproxyDownloader="$file"
+# https://github.com/joshcangit/dnsproxy-resolvconf/blob/4353c5e2cee12779c392947d09dae84504ac7a05/dnsproxy-setup.sh#L19
+#
+# use uname -m to get archtype
 
 
+getArchtype() {
+	arch="$(uname -m)"
+	case "$arch" in
+		*x86_64*) 
+			echo "386";;
+		*aarch64*)
+			echo "arm64";;
+	esac
+}
 
 
+REPO="https://github.com/AdguardTeam/dnsproxy"
+getLatestVersion() {
+
+	$curl -ISs "${REPO}/releases/latest" | grep -i ^location: | sed 's/.*\/\([v0-9.]\+\).*/\1/'
+}
 
 
-file="$($dnsproxyDownloader $TMPDIR)"
-mv "$file" "$binDir/dnsproxy"
+getFileName() {
+	echo "dnsproxy-linux-$(getArchtype)-$1.tar.gz"
+}
+
+tar="$(command -v tar)"
+
+downloadDNSProxy() {
+	local LATEST="$(getLatestVersion)"
+	local FILENAME="$(getFileName $LATEST)"
+	local URL="${REPO}/releases/download/${LATEST}/$FILENAME"
+	printf "Downloading from: "
+	echo "$URL"
+	$curl -L $URL -o "$TMPDIR/$FILENAME" --compressed -H "Accept-Encoding: zstd, gzip, deflate"
+
+	echo "$TMPDIR"
+
+	local TPATH=$($tar -ztf $TMPDIR/$FILENAME | grep dnsproxy$)
+	local RDIR=$(echo $TPATH | sed 's/^\.\///;s/dnsproxy$//')
+	$tar -C $TMPDIR -zxf $TMPDIR/$FILENAME $TPATH
+	mv -f $TMPDIR/${RDIR}dnsproxy $TMPDIR/dnsproxy
+
+
+	# interactive shell for debugging 
+	#IN_CUSTOM_SHELL="test-dnsproxy" TMPDIR="$TMPDIR" zsh
+}
+
+downloadDNSProxy
+
+
+file="${TMPDIR}/dnsproxy"
+
+if [ -f "$file" ]; then
+	echo "success downloading file"
+	echo "moving dnsproxy"
+	mv "$file" "$binDir/dnsproxy"
+else
+	echo "Failed to download dnsproxy" 1>&2
+	exit 1
+fi
+
 
 
 
