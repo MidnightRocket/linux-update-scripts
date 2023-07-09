@@ -1,17 +1,29 @@
 # https://github.com/AdguardTeam/dnsproxy/issues/39#issuecomment-570742700
+# https://github.com/joshcangit/dnsproxy-resolvconf/blob/master/adguard-dnsproxy.service
 [Unit]
 Description=DNSProxy service
+
+Before=network.target nss-lookup.target shutdown.target
+Conflicts=shutdown.target
+
 After=network-online.target
 
 [Service]
 User=dnsproxy
+Group=dnsproxy
 ExecStart=/usr/local/bin/dnsproxy-wrapper
 
-CapabilityBoundingSet=CAP_NET_BIND_SERVICE
-AmbientCapabilities=CAP_NET_BIND_SERVICE
+
+AmbientCapabilities=CAP_SETPCAP CAP_NET_RAW CAP_NET_BIND_SERVICE
+CapabilityBoundingSet=CAP_SETPCAP CAP_NET_RAW CAP_NET_BIND_SERVICE
+
+# Other process on the system is hidden from this.
+ProtectProc=invisible
+ProtectHome=yes
 
 Restart=on-failure
-RestartSec=10
+RestartSec=5
 KillMode=process
+
 [Install]
 WantedBy=multi-user.target
