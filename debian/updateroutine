@@ -77,5 +77,4 @@ sleep $time
 # https://github.com/MichaIng/DietPi/issues/4555#issuecomment-933622980
 # Need to use with now
 
-/usr/sbin/shutdown --no-wall -r now
-
+/usr/bin/systemctl --no-block --no-wall reboot
