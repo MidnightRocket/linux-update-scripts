@@ -64,7 +64,7 @@ baseUrl="https://raw.githubusercontent.com/MidnightRocket/linux-update-scripts/m
 
 baseName="updateroutine"
 updateFile="/usr/local/sbin/$baseName"
-downloadFile ${baseUrl}/$baseName cfd98113570868f923b245b653ac70e9c4cc78f6ef5c4200b2b150ba0da7a634 $updateFile
+downloadFile ${baseUrl}/$baseName 815f9f52f0a54f21788d5109a2f5af6dd98efe0bab264b4e8c9004e93d649ff9 $updateFile
 
 
 chmod 755 "$updateFile"
