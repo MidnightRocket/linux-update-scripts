@@ -65,7 +65,7 @@ binDir="/usr/local/bin"
 
 baseName="dnsproxy-wrapper"
 file="$binDir/$baseName"
-downloadFile ${baseUrl}/$baseName 21f9fe6c8adf3cda609d85049dc3f0cb12e9525bd6a2adf86e40120b32a1ee9f $file
+downloadFile ${baseUrl}/$baseName fd876e38a16c12f688e1442c32f3b58d5a3ac0b6563dd721d14d29388c4e4b3a $file
 # Must be executable
 chmod 755 $file
 
