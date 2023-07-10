@@ -64,7 +64,7 @@ baseUrl="https://raw.githubusercontent.com/MidnightRocket/linux-update-scripts/m
 
 baseName="updateroutine"
 updateFile="/usr/local/sbin/$baseName"
-downloadFile ${baseUrl}/$baseName 7ba8fbd3278358d658652aee30309808ad45dd76a7787227e451a7c8847de388 $updateFile
+downloadFile ${baseUrl}/$baseName 68c891303e40444186d931ac7d0b3e3d3a700b0d6b8cf2c3f0e65cf1d36871e2 $updateFile
 
 
 chmod 755 "$updateFile"
@@ -114,12 +114,12 @@ unitsDir="/etc/systemd/system"
 serviceUnit="weekly-update.service"
 baseName="$serviceUnit"
 file="$unitsDir/$baseName"
-downloadFile ${baseUrl}/systemd/$baseName c9152f46513d12000ce1bfd6d31eccf80cd7c07c91c4d0b27eb3bb982430012d $file
+downloadFile ${baseUrl}/systemd/$baseName f54441c773cf7425a83a006c9a04c1666a9d3cc716ddf902682859393568fe11 $file
 
 timerUnit="weekly-update.timer"
 baseName="$timerUnit"
 file="$unitsDir/$baseName"
-downloadFile ${baseUrl}/systemd/$baseName 23feea81fe8d800dc14e4d02a903bbaf23c3ffc14d54e586b8d8f046cb8259d7 $file
+downloadFile ${baseUrl}/systemd/$baseName a8ce0d6b99d58a9723b876de20fb92c57448ca14979e9396457c2356385a0d67 $file
 
 
 systemctl="$(command -v systemctl)"

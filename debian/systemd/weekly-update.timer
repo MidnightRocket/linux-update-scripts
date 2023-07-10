@@ -12,4 +12,4 @@ OnCalendar=Sun *-*-* 04:05:00
 RandomizedDelaySec=300
 
 [Install]
-WantedBy=network-online.target
+WantedBy=timers.target
