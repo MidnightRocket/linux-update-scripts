@@ -1,0 +1,17 @@
+[Unit]
+Description=Timer for healthping
+After=network-online.target
+Requires=network-online.target
+
+[Timer]
+# Every 3 minutes
+# Purposefully offset from whole numbers to prevent peeks
+OnCalendar=*-*-* *:01/3:00
+
+# RandomizedDelaySec cannot be greater than the interval
+# as this may result in greater intervals, than specified with OnCalandar
+RandomizedDelaySec=180
+FixedRandomDelay=true
+
+[Install]
+WantedBy=timers.target

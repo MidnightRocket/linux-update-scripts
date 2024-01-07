@@ -1,0 +1,25 @@
+#!/bin/sh
+set -eu
+
+readonly URLS_FILE="${1?File must be given}"
+
+if [ ! -f "$URLS_FILE" ]; then
+	printf "%b" "'$URLS_FILE' not found!\n" 1>&2
+	exit 1
+fi
+
+
+curl="$(command -v curl)"
+awk="$(command -v awk)"
+
+readonly OUTPUT_FILE="/dev/null"
+
+
+loadConfigs() {
+	"$awk" 'NF > 0 && !/^[[:space:]]*#/' "$URLS_FILE" | while read -r line; do
+		printf 'url="%b"\noutput="%b"\n' "$line" "$OUTPUT_FILE"
+	done
+}
+
+
+loadConfigs | "$curl" --no-progress-meter --fail --silent --show-error --max-time 10 --retry 5  --parallel --config -
