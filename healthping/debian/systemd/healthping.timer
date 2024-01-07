@@ -13,5 +13,7 @@ OnCalendar=*-*-* *:01/3:00
 RandomizedDelaySec=180
 FixedRandomDelay=true
 
+AccuracySec=1
+
 [Install]
 WantedBy=timers.target

@@ -114,7 +114,7 @@ downloadFile() {
 	fi
 	
 	stderr "installing to: $saveTo"
-	"$install" --mode "$mode" "$tmpFile" "$saveTo"
+	"$install" --compare --mode "$mode" "$tmpFile" "$saveTo"
 }
 
 APP_NAME="healthping"
@@ -141,7 +141,7 @@ fi
 
 baseName="$APP_NAME"
 file="$binDir/$baseName"
-downloadFile "${baseUrl}/$baseName" 8730465e660ae9c375464eb9802fc06c2bcf9e44476663da59c193f1fcabfd78 "$file" 755
+downloadFile "${baseUrl}/$baseName" fefd044b98c69f14a463f948fa41a62a545021a6c8fdbb4b296143faf7a0d69b "$file" 755
 
 USER="_${APP_NAME}"
 if ! id -u "$USER" > /dev/null 2>&1; then
@@ -162,7 +162,7 @@ downloadFile "${baseUrl}/systemd/$baseName" 7642ea792540ab2f6aa67e014747b4d65688
 timerUnit="${APP_NAME}.timer"
 baseName="$timerUnit"
 file="$unitsDir/$baseName"
-downloadFile "${baseUrl}/systemd/$baseName" d5a01d9ac32c561972683e5a06db39dadfa0edab6abd74f294d3f84859dca7c2 "$file" 644
+downloadFile "${baseUrl}/systemd/$baseName" 69e6a395f3906fb6d62fe75e7e05b160be25676aa0c4f6e4ec6052ca88a77d56 "$file" 644
 
 
 systemctl="$(commandv systemctl)"

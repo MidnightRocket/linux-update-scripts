@@ -22,4 +22,4 @@ loadConfigs() {
 }
 
 
-loadConfigs | "$curl" --no-progress-meter --fail --silent --show-error --max-time 10 --retry 5  --parallel --config -
+loadConfigs | "$curl" --no-progress-meter --fail --silent --show-error --max-time 10 --retry 5 --parallel --parallel-immediate --config -
