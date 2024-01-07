@@ -168,6 +168,8 @@ downloadFile "${baseUrl}/systemd/$baseName" 69e6a395f3906fb6d62fe75e7e05b160be25
 systemctl="$(commandv systemctl)"
 "$systemctl" enable --now "$timerUnit"
 "$systemctl" status "$timerUnit"
+"$systemctl" start "$serviceUnit"
+"$systemctl" status "$serviceUnit"
 
 print
 print "Ping urls are configured in '$configUrlsFile'"
