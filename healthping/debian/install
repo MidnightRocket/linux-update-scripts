@@ -162,7 +162,7 @@ downloadFile "${baseUrl}/systemd/$baseName" 7642ea792540ab2f6aa67e014747b4d65688
 timerUnit="${APP_NAME}.timer"
 baseName="$timerUnit"
 file="$unitsDir/$baseName"
-downloadFile "${baseUrl}/systemd/$baseName" 69e6a395f3906fb6d62fe75e7e05b160be25676aa0c4f6e4ec6052ca88a77d56 "$file" 644
+downloadFile "${baseUrl}/systemd/$baseName" 5d418ebb8a53e87b4d1585b1ad03fab77c1486127439b949eb017170423c0d3c "$file" 644
 
 
 systemctl="$(commandv systemctl)"

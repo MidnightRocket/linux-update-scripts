@@ -6,7 +6,8 @@ Requires=network-online.target
 [Timer]
 # Every 3 minutes
 # Purposefully offset from whole numbers to prevent peeks
-OnCalendar=*-*-* *:01/3:00
+# Use UTC to avoid problems with Daylight Savings Time
+OnCalendar=*:01/3:00 UTC
 
 # RandomizedDelaySec cannot be greater than the interval
 # as this may result in greater intervals, than specified with OnCalandar
